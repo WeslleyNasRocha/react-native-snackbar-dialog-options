@@ -1,10 +1,10 @@
-# react-native-snackbar-dialog
+# react-native-snackbar-dialog-options
 
 A React Native SnackBar component with configurable dialog. Pull Requests are welcomed.
 
 [![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
-## Why react-native-snackbar-dialog?
+## Why react-native-snackbar-dialog-options?
 
 - *Flexible* - Display as a popup message or a dialog
 - *Controllable* - Everything is just JavaScript and React Native
@@ -21,13 +21,13 @@ And also can display as dialog: <br />
 ## Installation
 
 ```sh
-yarn add react-native-snackbar-dialog
+yarn add react-native-snackbar-dialog-options
 ```
 
 ## Basic Usage
 
 ```javascript
-import SnackBar from 'react-native-snackbar-dialog'
+import SnackBar from 'react-native-snackbar-dialog-options'
 ```
 
 Render inline always shows SnackBar without any buttons.
@@ -126,7 +126,7 @@ Callback is optional, but it is suggested to use for flow control.
 ```js
 import React, { Component } from 'react'
 import { Text } from 'react-native'
-import SnackBar from 'react-native-snackbar-dialog'
+import SnackBar from 'react-native-snackbar-dialog-options'
 
 export default class App extends Component {
   onPress = () => {
