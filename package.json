@@ -1,7 +1,7 @@
 {
   "name": "react-native-snackbar-dialog-options",
   "version": "0.0.1",
-  "description": "A react native snackbar IOS / ANDROID",
+  "description": "A react native snackbar IOS /  ANDROID",
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "npm run build",
