@@ -107,7 +107,6 @@ export default class SnackBar extends Component {
 
     // Styles
     style: {},
-    renderContent: null,
     backgroundColor: STYLE_BANNER_COLOR,
     buttonColor: TEXT_COLOR_ACCENT,
     textColor: 'white',
@@ -237,13 +236,18 @@ export default class SnackBar extends Component {
       onCancel,
       title,
       textColor,
-    } = this.props
+      textStyle,
+      renderImage,
+      imageLeft
+    } = this.props;
 
     const titleElement = <Text style={[styles.text, { color: textColor }, textStyle]}>{title}</Text>
-
+    const imageElement = renderImage();
+    
     if (confirmText && cancelText) {
       return (
         <View>
+          {imageElement}
           {titleElement}
           <View style={styles.actionRow}>
             { this.renderButton(cancelText, onCancel, styles.flat) }
@@ -256,17 +260,42 @@ export default class SnackBar extends Component {
     if (confirmText) {
       return (
         <View style={styles.inlineRow}>
+          {imageElement}
           <Text style={[styles.inlineText, { color: textColor }]}>{title}</Text>
           { this.renderButton(confirmText, onConfirm) }
         </View>
       )
+    }else{
+      return (
+        <View>
+          <View style={{flexDirection:'row'}}>
+            {imageLeft?
+              <View style={{flexDirection:'row'}}>
+                <View>
+                  {imageElement}
+                </View>
+                <View>
+                  {titleElement}
+                </View>
+              </View>
+              :
+              <View style={{flexDirection:'row'}}>
+                <View>
+                  {titleElement}
+                </View>
+                <View>
+                  {imageElement}
+                </View>
+              </View>
+            }
+        </View>
+        </View>
+      )
     }
-
-    return titleElement
   }
 
   render () {
-    const { style, renderContent, backgroundColor, position, tapToClose } = this.props
+    const { style, backgroundColor, position, tapToClose } = this.props
 
     const isTop = position === 'top'
     const transformOffsetY = isTop
@@ -285,7 +314,7 @@ export default class SnackBar extends Component {
             style
           ]}
         >
-          { renderContent ? renderContent() : this.renderContent() }
+          { this.renderContent() }
         </Animated.View>
       </TouchableWithoutFeedback>
     )
