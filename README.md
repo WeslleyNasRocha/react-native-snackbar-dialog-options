@@ -21,7 +21,7 @@ And also can display as dialog: <br />
 ## Installation
 
 ```sh
-yarn add react-native-snackbar-dialog
+yarn add react-native-snackbar-dialog-options
 ```
 
 ## Basic Usage
