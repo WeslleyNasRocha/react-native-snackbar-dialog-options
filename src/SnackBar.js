@@ -242,12 +242,11 @@ export default class SnackBar extends Component {
     } = this.props;
 
     const titleElement = <Text style={[styles.text, { color: textColor }, textStyle]}>{title}</Text>
-    const imageElement = renderImage();
+    
     
     if (confirmText && cancelText) {
       return (
         <View>
-          {imageElement}
           {titleElement}
           <View style={styles.actionRow}>
             { this.renderButton(cancelText, onCancel, styles.flat) }
@@ -260,38 +259,43 @@ export default class SnackBar extends Component {
     if (confirmText) {
       return (
         <View style={styles.inlineRow}>
-          {imageElement}
           <Text style={[styles.inlineText, { color: textColor }]}>{title}</Text>
           { this.renderButton(confirmText, onConfirm) }
         </View>
       )
-    }else{
-      return (
-        <View>
-          <View style={{flexDirection:'row'}}>
-            {imageLeft?
-              <View style={{flexDirection:'row'}}>
-                <View>
-                  {imageElement}
-                </View>
-                <View>
-                  {titleElement}
-                </View>
-              </View>
-              :
-              <View style={{flexDirection:'row'}}>
-                <View>
-                  {titleElement}
-                </View>
-                <View>
-                  {imageElement}
-                </View>
-              </View>
-            }
-        </View>
-        </View>
-      )
     }
+    
+    if(renderImage){
+        const imageElement = renderImage();
+        return (
+          <View>
+            <View style={{flexDirection:'row'}}>
+              {imageLeft?
+                <View style={{flexDirection:'row'}}>
+                  <View>
+                    {imageElement}
+                  </View>
+                  <View>
+                    {titleElement}
+                  </View>
+                </View>
+                :
+                <View style={{flexDirection:'row'}}>
+                  <View>
+                    {titleElement}
+                  </View>
+                  <View>
+                    {imageElement}
+                  </View>
+                </View>
+              }
+            </View>
+          </View>
+        )
+    }
+    
+    return titleElement
+    
   }
 
   render () {
