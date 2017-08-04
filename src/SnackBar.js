@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import type { SnackItemType } from './type'
 import TimerMixin from 'react-timer-mixin'
 import reactMixin from 'react-mixin'
-
+import LinearGradient from 'react-native-linear-gradient';
 import {
   View,
   Animated,
@@ -26,6 +26,9 @@ const TO_POSITION_TOP: number = -360
 
 const STYLE_BANNER_COLOR: string = '#000000'
 const TEXT_COLOR_ACCENT: string = '#0088ff'
+
+const STYLE_BANNER_COLOR1: string = '#7241A0'
+const STYLE_BANNER_COLOR2: string = '#07ACA3'
 
 const { width } = Dimensions.get('window')
 
@@ -238,11 +241,12 @@ export default class SnackBar extends Component {
       textColor,
       textStyle,
       renderImage,
-      imageLeft
+      imageLeft,
+      containerGradientStyle
     } = this.props;
 
     const titleElement = <Text style={[styles.text, { color: textColor }, textStyle]}>{title}</Text>
-    
+    let imageElement = '';
     
     if (confirmText && cancelText) {
       return (
@@ -266,60 +270,82 @@ export default class SnackBar extends Component {
     }
     
     if(renderImage){
-        const imageElement = renderImage();
-        return (
-          <View>
-            <View style={{flexDirection:'row'}}>
-              {imageLeft?
-                <View style={{flexDirection:'row'}}>
-                  <View>
-                    {imageElement}
-                  </View>
-                  <View>
-                    {titleElement}
-                  </View>
-                </View>
-                :
-                <View style={{flexDirection:'row'}}>
-                  <View>
-                    {titleElement}
-                  </View>
-                  <View>
-                    {imageElement}
-                  </View>
-                </View>
-              }
-            </View>
-          </View>
-        )
+        imageElement = renderImage();
     }
+    return (
+      <View style={[ containerGradientStyle ]}>
+        <View style={{flexDirection:'row'}}>
+          {imageLeft?
+            <View style={{flexDirection:'row'}}>
+              {imageElement? <View>{imageElement}</View>:null} 
+              <View style={{backgroundColor:'transparent'}}>
+                {titleElement}
+              </View>
+            </View>
+            :
+            <View style={{backgroundColor:'transparent'}}>
+              <View>
+                {titleElement}
+              </View>
+              {imageElement? <View>{imageElement}</View>:null} 
+            </View>
+          }
+        </View>
+      </View>
+    )
+    
     
     return titleElement
     
   }
 
   render () {
-    const { style, backgroundColor, position, tapToClose } = this.props
+    const { style, backgroundColor, position, tapToClose, gradient, gradientColors } = this.props
 
     const isTop = position === 'top'
     const transformOffsetY = isTop
       ? this.state.transformOffsetYTop
       : this.state.transformOffsetYBottom
+
+    if(gradient){
+      return(
+            <TouchableWithoutFeedback onPress={() => tapToClose && this.hide()}>
+              <Animated.View
+                  style={[
+                    isTop && styles.containerTop || !isTop && styles.containerBottom,
+                    {
+                      //opacity: this.state.transformOpacity,
+                      transform: [{ translateY: transformOffsetY }],
+                    },
+                    style
+                  ]}
+                >
+                <LinearGradient 
+                      start={{x: -.1, y: -.4}} end={{x: .8, y: -.3}}
+                      colors={[gradientColors.gradient1,gradientColors.gradient2]} 
+                      style={ {flex:1}}>
+                    { this.renderContent() }
+                </LinearGradient>
+              </Animated.View>
+          </TouchableWithoutFeedback>
+      )
+    }
     return (
       <TouchableWithoutFeedback onPress={() => tapToClose && this.hide()}>
-        <Animated.View
-          style={[
-            isTop && styles.containerTop || !isTop && styles.containerBottom,
-            {
-              opacity: this.state.transformOpacity,
-              transform: [{ translateY: transformOffsetY }],
-              backgroundColor
-            },
-            style
-          ]}
-        >
-          { this.renderContent() }
-        </Animated.View>
+
+          <Animated.View
+              style={[
+                isTop && styles.containerTop || !isTop && styles.containerBottom,
+                {
+                  opacity: this.state.transformOpacity,
+                  transform: [{ translateY: transformOffsetY }],
+                  backgroundColor
+                },
+                style
+              ]}
+            >
+              { this.renderContent() }
+          </Animated.View>
       </TouchableWithoutFeedback>
     )
   }
