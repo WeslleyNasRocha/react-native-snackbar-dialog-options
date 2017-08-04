@@ -1,6 +1,6 @@
 # react-native-snackbar-dialog-options
 
-A React Native SnackBar component with configurable dialog. Pull Requests are welcomed.
+A React Native SnackBar component with configurable dialog [NEW] gradient. Pull Requests are welcomed.
 
 [![Standard - JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
@@ -143,4 +143,19 @@ export default class App extends Component {
     )
   }
 }
+```
+
+## Complete Example with GRADIENT
+
+```js
+SnackBar.show('lambiscando geral', {
+    style: { height:60 },
+    gradientColors:{gradient1:'#07ACA3',gradient2:'#7241A0'},
+    gradient:true,
+    containerGradientStyle: {padding:7},
+    textColor: 'white',
+    duration: 4000,
+    renderImage : () => this.renderIconSnackBar(),
+    imageLeft: true,
+});
 ```
