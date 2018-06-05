@@ -48,7 +48,9 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    padding: 15,
+    flex: 1, 
+    flexWrap: 'wrap',
+    paddingHorizontal: 15,
     fontSize: 16
   },
 
@@ -245,7 +247,7 @@ export default class SnackBar extends Component {
       containerGradientStyle
     } = this.props;
 
-    const titleElement = <Text style={[styles.text, { color: textColor }, textStyle]}>{title}</Text>
+    const titleElement = <Text numberOfLines={2} style={[styles.text, { color: textColor }, textStyle]}>{title}</Text>
     let imageElement = '';
     
     if (confirmText && cancelText) {
@@ -273,12 +275,12 @@ export default class SnackBar extends Component {
         imageElement = renderImage();
     }
     return (
-      <View style={[ containerGradientStyle ]}>
-        <View style={{flexDirection:'row'}}>
+      <View style={[ {flex: 1}, containerGradientStyle ]}>
+        <View style={{flex: 1, flexDirection:'row'}}>
           {imageLeft?
-            <View style={{flexDirection:'row'}}>
+            <View style={{flex: 1, flexDirection:'row'}}>
               {imageElement? <View>{imageElement}</View>:null} 
-              <View style={{backgroundColor:'transparent'}}>
+              <View style={{flexDirection:'row', flex: 1, flexWrap: 'wrap', alignItems: 'center'}}>
                 {titleElement}
               </View>
             </View>
